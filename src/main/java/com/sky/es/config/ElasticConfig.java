@@ -29,7 +29,7 @@ public class ElasticConfig {
 
     @Bean
     public RestClientBuilder restClientBuilder() {
-        log.info("elasticsearch's address is ", address);
+        log.info("elasticsearch's address is {}", address);
         HttpHost[] httpHosts = Arrays.stream(address).map(this::createHttpHost)
                 .filter(Objects::nonNull)
                 .toArray(HttpHost[]::new);

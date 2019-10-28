@@ -1,6 +1,7 @@
 package com.sky.es.service;
 
 import com.sky.es.domain.ElasticEntity;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,29 @@ public class IndexRequestServiceTest {
 
     @Test
     public void getIndexData(){
-        ElasticEntity posts = indexRequestService.getIndexData("posts", "2");
+        ElasticEntity posts = indexRequestService.getIndexData("posts", "1");
 
         System.out.println(posts);
+    }
+
+    @Test
+    public void existsData(){
+        boolean posts = indexRequestService.existsData("posts", "1");
+        Assert.assertTrue(posts);
+    }
+
+    @Test
+    public void existsAsyncData(){
+        indexRequestService.existsAsyncData("posts", "1");
+    }
+
+    @Test
+    public void deleteData() throws IOException {
+        indexRequestService.deleteData("posts","2");
+    }
+
+    @Test
+    public void updateData() throws IOException {
+        indexRequestService.updateData("posts","5");
     }
 }
