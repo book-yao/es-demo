@@ -1,0 +1,64 @@
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "age": 40
+          }
+        }
+      ],
+      "should": [
+        {"match": {
+          "address": "place"
+        }}
+      ], 
+      "must_not": [
+        {
+          "match": {
+            "state": "ID"
+          }
+        }
+      ],
+      "filter": {"range": {
+        "balance": {
+          "gte": 2000,
+          "lte": 20000
+        }
+      }}
+    }
+  },
+  "from": 0,
+  "size": 10
+}
+
+
+聚合：
+GET /bank/_search
+{
+  "size":1,
+  "aggs": {
+    "group_by_state": {
+      "terms": {
+        "field": "state.keyword",
+        "size": 3,
+        "order": {
+          "avg_balance": "desc"
+        }
+      },
+      "aggs": {
+        "avg_balance": {
+         "avg": {
+           "field": "balance"
+         }
+        }
+      }
+    },
+    "group_by_firstname":{
+      "terms": {
+        "field": "firstname.keyword",
+        "size": 3
+      }
+    }
+  }
+}
